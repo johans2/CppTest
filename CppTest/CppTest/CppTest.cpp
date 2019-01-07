@@ -7,22 +7,26 @@
 #include "Game.h"
 #include "NintendoGame.h"
 
+using namespace std;
+
 void PrintGameInfo(const Game& g);
 void PrintByPointer(const Game * const gp);
-void PrintByPointer(const std::shared_ptr<Game> gp);
+void PrintByPointer(const shared_ptr<Game> gp);
 
 template<typename T>
-using sPtr = std::shared_ptr<T>;
+using sPtr = shared_ptr<T>;
+
+using UShort = unsigned short int;
 
 int main()
 {
-
-
 	{
 		Game game1(1, "Blood Bourne");
-		sPtr<Game> game2 = std::make_shared<Game>(2, "Mass effect");
-		sPtr<Game> game3 = std::make_shared<NintendoGame>(3, "Dark souls");
+		sPtr<Game> game2 = make_shared<Game>(2, "Mass effect");
+		sPtr<Game> game3 = make_shared<NintendoGame>(3, "Dark souls");
 		
+		UShort a = 1;
+
 		game1.SetRating(10);
 		game2->SetRating(8);
 		game3->SetRating(9);
