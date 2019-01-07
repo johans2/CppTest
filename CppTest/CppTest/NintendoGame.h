@@ -5,13 +5,13 @@ class NintendoGame : public Game
 {
 public:
 
-	const string * const GetConsole() const override;
+	const std::string * const GetConsole() const override;
 
-	NintendoGame(int id, string name);
+	NintendoGame(int id, std::string name);
 	~NintendoGame();
 
 private:
-	string m_console;
+	std::string m_console;
 
 };
 

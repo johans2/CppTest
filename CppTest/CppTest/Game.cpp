@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "Game.h"
 
+using namespace std;
+
 Game::Game(int id, string name) :
 	m_ID(id),
 	m_name(name),

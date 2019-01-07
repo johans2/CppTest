@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "NintendoGame.h"
 
+using namespace std;
 
 
-
-NintendoGame::NintendoGame(int id, string name) : Game(id, name), m_console("Nintendo")
+NintendoGame::NintendoGame(int id, string name) : Game(id, name), 
+	m_console("Nintendo")
 {	
 }
 
