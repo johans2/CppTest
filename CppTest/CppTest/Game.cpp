@@ -1,12 +1,13 @@
+
 #include "pch.h"
 #include "Game.h"
 
-
-Game::Game(int id, string name)
+Game::Game(int id, string name) :
+	m_ID(id),
+	m_name(name),
+	m_rating(0)
 {
-	m_ID = id;
-	m_name = name;
-	m_rating = 0;
+	std::cout << "Game: " << m_name << " created.\n";
 }
 
 
@@ -32,4 +33,5 @@ void Game::SetRating(int rating)
 
 Game::~Game()
 {
+	std::cout << "Game: " << m_name << " deleted.\n";
 }

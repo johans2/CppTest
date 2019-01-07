@@ -3,32 +3,38 @@
 
 #include "pch.h"
 #include <iostream>
+#include <memory>
 #include "Game.h"
 #include "NintendoGame.h"
 
 void PrintGameInfo(const Game& g);
 void PrintByPointer(const Game * const gp);
+void PrintByPointer(const std::shared_ptr<Game> gp);
+
+template<typename T>
+using sPtr = std::shared_ptr<T>;
 
 int main()
 {
-	Game game1(1, "Blood Bourne");
-	Game * game2 = new Game(2, "Mass effect");
-	Game * game3 = new NintendoGame(3, "Dark souls");
 
-	game1.SetRating(10);
-	game2->SetRating(8);
-	game3->SetRating(9);
-	/*
-	PrintGameInfo(game1);
-	PrintGameInfo(*game2);
-	PrintGameInfo(*game3);
-	*/
-	PrintByPointer(&game1);
-	PrintByPointer(game2);
-	PrintByPointer(game3);
 
-	delete game2;
-	delete game3;
+	{
+		Game game1(1, "Blood Bourne");
+		sPtr<Game> game2 = std::make_shared<Game>(2, "Mass effect");
+		sPtr<Game> game3 = std::make_shared<NintendoGame>(3, "Dark souls");
+		
+		game1.SetRating(10);
+		game2->SetRating(8);
+		game3->SetRating(9);
+
+		PrintGameInfo(game1);
+		PrintGameInfo(*game2);
+		PrintGameInfo(*game3);
+
+		PrintByPointer(&game1);
+		PrintByPointer(game2);
+		PrintByPointer(game3);
+	}
 
 	std::cin.get();
 }
@@ -60,5 +66,13 @@ void PrintByPointer(const Game * const gp)
 	std::cout << " Game 1 console: " << *gp->GetConsole();
 	std::cout << " Game 1 rating: " << *gp->GetRating();
 	std::cout << "\n";
+}
 
+void PrintByPointer(const std::shared_ptr<Game> gp)
+{
+	std::cout << "Game 1 ID: " << *gp->GetID();
+	std::cout << " Game 1 name: " << *gp->GetName();
+	std::cout << " Game 1 console: " << *gp->GetConsole();
+	std::cout << " Game 1 rating: " << *gp->GetRating();
+	std::cout << "\n";
 }
