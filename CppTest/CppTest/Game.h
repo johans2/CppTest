@@ -25,6 +25,6 @@ class Game
 		int m_ID;
 		int m_rating;
 		std::string m_name;
-		std::string m_defaultConsole = "PC";
+		const std::string m_defaultConsole = "PC";
 };
 

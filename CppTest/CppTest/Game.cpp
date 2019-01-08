@@ -38,7 +38,7 @@ void Game::RunThenFunc(void(*onRunFinished)(const std::string&, bool)) const
 	onRunFinished(m_name, true);
 }
 
-// Callback accspting lambda
+// Callback accepting lambda
 void Game::RunThenLambda(const std::function<void(const std::string&, bool)>& onRunFinished) const
 {
 	using namespace std::literals::chrono_literals;
