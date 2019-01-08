@@ -9,9 +9,10 @@
 
 using namespace std;
 
-void PrintGameInfo(const Game& g);
+void PrintByReference(const Game& g);
 void PrintByPointer(const Game * const gp);
-void PrintByPointer(const shared_ptr<Game> gp);
+void PrintBySharedPointer(const shared_ptr<Game> gp);
+void OnRunComplete(const std::string& name, bool success);
 
 template<typename T>
 using sPtr = shared_ptr<T>;
@@ -31,13 +32,16 @@ int main()
 		game2->SetRating(8);
 		game3->SetRating(9);
 
-		PrintGameInfo(game1);
-		PrintGameInfo(*game2);
-		PrintGameInfo(*game3);
+		PrintByReference(game1);
+		PrintByReference(*game2);
+		PrintByReference(*game3);
 
-		PrintByPointer(&game1);
-		PrintByPointer(game2);
-		PrintByPointer(game3);
+		game1.Run(OnRunComplete);
+		game2->Run(OnRunComplete);
+		game3->Run([](const std::string& name, bool success) { 
+							std::cout << name << " Did not run successfully.\n"; 
+							});
+
 	}
 
 	std::cin.get();
@@ -54,7 +58,18 @@ int main()
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
 
-void PrintGameInfo(const Game & g)
+void OnRunComplete(const std::string& name, bool success) {
+	if (success)
+	{
+		std::cout << name << " Ran successfully!\n";
+	}
+	else {
+		std::cout << name << " Did not run successfully.\n";
+	}
+
+}
+
+void PrintByReference(const Game & g)
 {
 	std::cout << "Game 1 ID: " << *g.GetID();
 	std::cout << " Game 1 name: " << *g.GetName();
@@ -72,7 +87,7 @@ void PrintByPointer(const Game * const gp)
 	std::cout << "\n";
 }
 
-void PrintByPointer(const std::shared_ptr<Game> gp)
+void PrintBySharedPointer(const std::shared_ptr<Game> gp)
 {
 	std::cout << "Game 1 ID: " << *gp->GetID();
 	std::cout << " Game 1 name: " << *gp->GetName();

@@ -8,11 +8,13 @@ class Game
 	public:
 		Game(int id, std::string name);
 		~Game();
-		const int * const GetID() const;
-		const std::string * const GetName() const;
-		const int * const GetRating() const;
 
-		void SetRating(int rating);
+		const int * const			GetID() const;
+		const std::string * const	GetName() const;
+		const int * const			GetRating() const;
+		const void					Run(void(*onRunFinished)(const std::string&, bool)) const;
+
+		void						SetRating(int rating);
 		
 
 		virtual const std::string * const GetConsole() const { return &m_defaultConsole; }
