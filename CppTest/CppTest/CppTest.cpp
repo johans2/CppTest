@@ -26,7 +26,7 @@ int main()
 		sPtr<Game> game2 = make_shared<Game>(2, "Mass effect");
 		sPtr<Game> game3 = make_shared<NintendoGame>(3, "Dark souls");
 		
-		UShort a = 1;
+		std::string err = "ERROR: ";
 
 		game1.SetRating(10);
 		game2->SetRating(8);
@@ -36,12 +36,15 @@ int main()
 		PrintByReference(*game2);
 		PrintByReference(*game3);
 
-		game1.Run(OnRunComplete);
-		game2->Run(OnRunComplete);
-		game3->Run([](const std::string& name, bool success) { 
-							std::cout << name << " Did not run successfully.\n"; 
-							});
+		game1.RunThenFunc(OnRunComplete);
+		game2->RunThenFunc(OnRunComplete);
 
+		auto lambda = [&err](const std::string& name, bool success) { 
+			std::cout << err << name << " Did not run successfully.\n";
+		};
+
+		game3->RunThenLambda(lambda);
+		
 	}
 
 	std::cin.get();
