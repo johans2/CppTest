@@ -29,7 +29,7 @@ const int * const Game::GetRating() const {
 }
 
 // Callback with pure function pointer
-const void Game::RunThenFunc(void(*onRunFinished)(const std::string&, bool)) const
+void Game::RunThenFunc(void(*onRunFinished)(const std::string&, bool)) const
 {
 	using namespace std::literals::chrono_literals;
 
@@ -39,7 +39,7 @@ const void Game::RunThenFunc(void(*onRunFinished)(const std::string&, bool)) con
 }
 
 // Callback accspting lambda
-const void Game::RunThenLambda(const std::function<void(const std::string&, bool)>& onRunFinished) const
+void Game::RunThenLambda(const std::function<void(const std::string&, bool)>& onRunFinished) const
 {
 	using namespace std::literals::chrono_literals;
 
