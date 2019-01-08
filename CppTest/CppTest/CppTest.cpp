@@ -13,6 +13,7 @@ void PrintByReference(const Game& g);
 void PrintByPointer(const Game * const gp);
 void PrintBySharedPointer(const shared_ptr<Game> gp);
 void OnRunComplete(const std::string& name, bool success);
+void PrintIsSameGame(const Game& a, const Game& b);
 
 template<typename T>
 using sPtr = shared_ptr<T>;
@@ -25,6 +26,7 @@ int main()
 		Game game1(1, "Blood Bourne");
 		sPtr<Game> game2 = make_shared<Game>(2, "Mass effect");
 		sPtr<Game> game3 = make_shared<NintendoGame>(3, "Dark souls");
+		sPtr<Game> game4 = make_shared<NintendoGame>(4, "Blood Bourne");
 		
 		std::string err = "ERROR: ";
 
@@ -35,6 +37,8 @@ int main()
 		PrintByReference(game1);
 		PrintByReference(*game2);
 		PrintByReference(*game3);
+
+		PrintIsSameGame(game1, *game4);
 
 		game1.RunThenFunc(OnRunComplete);
 		game2->RunThenFunc(OnRunComplete);
@@ -60,6 +64,20 @@ int main()
 //   4. Use the Error List window to view errors
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+
+
+void PrintIsSameGame(const Game& a, const Game& b) {
+	
+	if (a == b)
+	{
+		std::cout << *a.GetName() << " and " << *b.GetName() << " are the same\n";
+	}
+	else {
+		std::cout << *a.GetName() << " and " << *b.GetName() << " are NOT the same\n";
+	}
+
+	
+}
 
 void OnRunComplete(const std::string& name, bool success) {
 	if (success)
