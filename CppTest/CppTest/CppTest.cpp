@@ -6,6 +6,8 @@
 #include <memory>
 #include "Game.h"
 #include "NintendoGame.h"
+#include <thread>
+#include <mutex>
 
 using namespace std;
 
@@ -14,6 +16,7 @@ void PrintByPointer(const Game * const gp);
 void PrintBySharedPointer(const shared_ptr<Game> gp);
 void OnRunComplete(const std::string& name, bool success);
 void PrintIsSameGame(const Game& a, const Game& b);
+void WaitInThread(std::string returnMsg);
 
 template<typename T>
 using sPtr = shared_ptr<T>;
@@ -40,15 +43,25 @@ int main()
 
 		PrintIsSameGame(game1, *game4);
 
-		game1.RunThenFunc(OnRunComplete);
-		game2->RunThenFunc(OnRunComplete);
-
 		auto lambda = [&err](const std::string& name, bool success) { 
 			std::cout << err << name << " Did not run successfully.\n";
 		};
 
+		std::thread t1(WaitInThread, std::string("stuff..\n"));
+		std::thread t2(WaitInThread, std::string("other stuff..\n"));
+		std::thread t3(WaitInThread, std::string("different stuff..\n"));
+
+		game1.RunThenFunc(OnRunComplete);
+		game2->RunThenFunc(OnRunComplete);
 		game3->RunThenLambda(lambda);
 		
+
+		t1.join();
+		t2.join();
+		t3.join();
+
+
+		std::cout << " ----> Program finished.\n";
 	}
 
 	std::cin.get();
@@ -65,6 +78,24 @@ int main()
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
 
+int number(0);
+std::mutex mtx;
+
+void WaitInThread(std::string returnMsg) {
+	using namespace std::literals::chrono_literals;
+	
+	std::this_thread::sleep_for(2s);
+
+
+	mtx.lock();
+	for (size_t i = 0; i < 10; i++)
+	{
+		number++;
+	}
+	std::cout << " Done doing " << returnMsg << "  number: " << number << "\n";
+	mtx.unlock();
+	
+}
 
 void PrintIsSameGame(const Game& a, const Game& b) {
 	
