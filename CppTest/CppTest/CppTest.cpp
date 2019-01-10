@@ -86,14 +86,15 @@ void WaitInThread(std::string returnMsg) {
 	
 	std::this_thread::sleep_for(2s);
 
+	std::lock_guard<std::mutex> lock(mtx); // Does mutex lock and unlock in constructor/destructor
 
-	mtx.lock();
+	//mtx.lock();
 	for (size_t i = 0; i < 10; i++)
 	{
 		number++;
 	}
 	std::cout << " Done doing " << returnMsg << "  number: " << number << "\n";
-	mtx.unlock();
+	//mtx.unlock();
 	
 }
 
