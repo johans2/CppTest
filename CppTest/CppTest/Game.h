@@ -4,6 +4,7 @@
 #include <functional>
 #include <memory>
 #include "GameState.h"
+#include "Game.h"
 
 
 class Game
@@ -27,30 +28,53 @@ class Game
 	protected:
 		
 		// Game States
+		class GameState
+		{
+		public:
+			virtual void Enter(Game& game) {};
+			virtual void Update(Game& game) {};
+			virtual void Exit(Game& game) {};
+		};
+
 		class SplashScreenState : public GameState {
-			void Enter() override;
-			void Update() override;
-			void Exit() override;
+			public:
+				SplashScreenState()
+				{ 
+					std::cout << "SplashScreenState constructor called.\n"; 
+				}
+				void Enter(Game& game) override;
+				void Update(Game& game) override;
+				void Exit(Game& game) override;
 		};
 
 		class RunningState : public GameState {
-			void Enter() override;
-			void Update() override;
-			void Exit() override;
+			public:
+				RunningState()
+				{ 
+					std::cout << "RunningState constructor called.\n"; 
+				}
+				void Enter(Game& game) override;
+				void Update(Game& game) override;
+				void Exit(Game& game) override;
 		};
 
 		class CreditsState : public GameState {
-			void Enter() override;
-			void Update() override;
-			void Exit() override;
+			public:
+				CreditsState()
+				{ 
+					std::cout << "CreditsState constructor called.\n"; 
+				}
+				void Enter(Game& game) override;
+				void Update(Game& game) override;
+				void Exit(Game& game) override;
 		};
 
-		std::shared_ptr<SplashScreenState>	m_SplashScreenState;
-		std::shared_ptr<RunningState>		m_RunningState;
-		std::shared_ptr<CreditsState>		m_CreditsState;
+		SplashScreenState	m_SplashScreenState;
+		RunningState		m_RunningState;
+		CreditsState		m_CreditsState;
 
-		std::shared_ptr <GameState>			m_CurrenState;
-		void GoToState(std::shared_ptr<GameState> newState);
+		GameState *			m_CurrenState;
+		void GoToState(GameState& newState);
 
 
 	private:

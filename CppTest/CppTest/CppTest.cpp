@@ -52,11 +52,11 @@ int main()
 		std::thread t2(WaitInThread, std::string("other stuff..\n"));
 		std::thread t3(WaitInThread, std::string("different stuff..\n"));
 		*/
-
+		std::cout << " ----------------- RUNNING GAMES -----------------\n";
 		game1.RunThenFunc(OnRunComplete);
 		game2->RunThenFunc(OnRunComplete);
 		game3->RunThenLambda(lambda);
-		
+		std::cout << " ----------------- RUN FINISHED -----------------\n";
 
 		const int x = 10;
 		const int& xr = x;
