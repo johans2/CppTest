@@ -47,19 +47,28 @@ int main()
 			std::cout << err << name << " Did not run successfully.\n";
 		};
 
+		/*
 		std::thread t1(WaitInThread, std::string("stuff..\n"));
 		std::thread t2(WaitInThread, std::string("other stuff..\n"));
 		std::thread t3(WaitInThread, std::string("different stuff..\n"));
+		*/
 
 		game1.RunThenFunc(OnRunComplete);
 		game2->RunThenFunc(OnRunComplete);
 		game3->RunThenLambda(lambda);
 		
 
+		const int x = 10;
+		const int& xr = x;
+		const int* xp = &x;
+
+		cout << "---- "<< xr << " --- " << *(&xr);
+
+		/*
 		t1.join();
 		t2.join();
 		t3.join();
-
+		*/
 
 		std::cout << " ----> Program finished.\n";
 	}
